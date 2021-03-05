@@ -3,8 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tulingxueyuan.mapper.EmpMapper">
-<!--根据id查询Emp    -->
-    <select id="selectEmp" resultType="cn.tulingxueyuan.pojo.Emp">
+<!--根据id查询Emp    同一个命名空间只能有一个唯一的id 除非有不同的databaseId-->
+    <select id="selectEmp" resultType="emp">
         select * from emp where id=#{id}
     </select>
+    <insert id="insertEmp">
+--      selectKey 可以在增删改之前或者之后运行
+--      order BEFORE|AFTER 设置在增删改之前或之后运行
+--      keyProperty 将当前查询结果存放在哪个属性中
+--      resultType 返回的数据类型
+        <selectKey order="BEFORE" keyProperty="id" resultType="int">
+            select max(id)+1 from emp
+        </selectKey>
+        insert into emp (id,username) values (#{id},#{username})
+    </insert>
+    <update id="updateEmp">
+        update emp set username=#{username} where id=#{id}
+    </update>
+
+    <delete id="deleteEmp">
+        delete from emp where id=#{id}
+    </delete>
 </mapper>
