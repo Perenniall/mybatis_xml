@@ -6,6 +6,7 @@
 
     <groupId>cn.tulingxueyuan</groupId>
     <artifactId>mybatis_xml</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -19,6 +20,10 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>mybatis_params_results</module>
+        <module>mybatis_resultmap</module>
+    </modules>
     <dependencies>
         <!--mybatis核心依赖-->
         <dependency>

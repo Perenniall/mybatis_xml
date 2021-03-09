@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tulingxueyuan.mapper.EmpMapper">
+
+
+    <resultMap id="QueryEmp_Map" type="map">
+        <id column="e_id" property="id"></id>
+        <result column="username" property="username"></result>
+        <result column="d_id" property="deptId"></result>
+        <result column="dept_name" property="deptName"></result>
+    </resultMap>
+    <select id="QueryEmp" resultMap="QueryEmp_Map">
+        SELECT t1.`id` AS e_id,t1.`username`,t2.`id` AS d_id,t2.`dept_name` FROM
+        emp t1 INNER JOIN dept t2 ON t1.`dept_id`=t2.`id`
+        WHERE t1.id=#{id}
+    </select>
+</mapper>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--配置外部属性资源文件 通过${}引用-->
+    <properties resource="db.properties"></properties>
+<!--    <settings>-->
+<!--    &lt;!&ndash;是否允许在SQL中使用别名 默认是允许；当设置别名后会根据SQL的别名和属性名进行映射（不会设置该选项）&ndash;&gt;-->
+<!--        <setting name="useColumnLabel" value="false"/>-->
+<!--        &lt;!&ndash;是否将数据库中的蛇形命名映射为驼峰命名&ndash;&gt;-->
+<!--        <setting name="mapUnderscoreToCameCase" value="true"/>-->
+<!--    </settings>-->
+    <typeAliases>
+        <!--根据包设置包里面所有的类的别名；会将类的名字作为别名（忽略大小写）-->
+        <package name="cn.tulingxueyuan.pojo.Emp"/>
+    </typeAliases>
+    <!--environments可以多个环境
+    default默认的数据库环境-->
+    <environments default="development">
+        <!--environment  配置数据库环境 id 指定当前数据库环境的唯一标识，会被父节点default所设置-->
+        <environment id="development">
+            <!--事务管理器
+            type=JDBC 使用jdbc的事务管理
+            MANAGED不运用事务-->
+            <transactionManager type="JDBC"/>
+            <!--数据源
+            type 指定连接池
+            POLED 不使用连接池
+            JNDI JNDI连接池 可以在tomcat中使用-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+<!--        <mapper resource="EmpMapper.xml"/>-->
+        <mapper class="cn.tulingxueyuan.mapper.EmpMapper"></mapper>
+    </mappers>
+</configuration>

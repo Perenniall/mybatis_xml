@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tulingxueyuan.mapper.EmpMapper">
+<!--根据id查询Emp    同一个命名空间只能有一个唯一的id 除非有不同的databaseId-->
+<!--1.#{}   经过预编译，根据不同数据类型来编译成对应数据库所对应的数据
+            能够有效防止SQL注入
+    2.${}   不会进行预编译，会直接将输入的数据拼接在SQL中-->
+<!--声明resultmap自定义结果集-->
+    <resultMap id="emp_map" type="cn.tulingxueyuan.pojo.Emp">
+        <id column="id" property="id"></id>
+        <result column="username" property="username"></result>
+        <result column="create_date" property="create_date"></result>
+    </resultMap>
+    <select id="selectEmp" resultType="cn.tulingxueyuan.pojo.Emp" resultMap="emp_map">
+        select * from emp where id=#{id}
+    </select>
+</mapper>

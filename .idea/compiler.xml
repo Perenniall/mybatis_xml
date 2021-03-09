@@ -6,7 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="mybatis_xml" />
+        <module name="mybatis_resultmap" />
+        <module name="mybatis_params_results" />
       </profile>
     </annotationProcessing>
   </component>
