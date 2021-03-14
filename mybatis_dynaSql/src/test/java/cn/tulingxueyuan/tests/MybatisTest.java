@@ -1,11 +1,12 @@
 package cn.tulingxueyuan.tests;
 
 
-import cn.tulingxueyuan.mapper.DeptMapper;
+
 import cn.tulingxueyuan.mapper.EmpMapper;
-import cn.tulingxueyuan.pojo.Dept;
 import cn.tulingxueyuan.pojo.Emp;
+import cn.tulingxueyuan.pojo.QueryEmpDTO;
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -14,20 +15,10 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-//mybatis搭建步骤
-//1.添加pom依赖（mybatis的核心jar包和数据库版本对应版本的驱动jar包）
-//2.新建数据库和表
-//3.添加mybatis全局配置文件
-//4.修改全局配置文件中的数据源配置信息
-//5.添加数据库表对应的POJO对象（实体类）
-//6.添加对应的PojoMapper.xml（维护所有的sql）
-//    修改namespace:如果是statementId没有特殊要求
-//                如果是接口绑定形式必须等于接口的完整限定名
-//    修改对应的id（唯一）resultType 对应返回的类型 如果是POJO需要制定完整限定名
-//7.修改mybatis全局配置文件：修改Mapper
 public class MybatisTest {
     SqlSessionFactory sqlSessionFactory;
     @Before
@@ -49,8 +40,10 @@ public class MybatisTest {
     public void test01(){
         try (SqlSession session = sqlSessionFactory.openSession()) {
             EmpMapper mapper = session.getMapper(EmpMapper.class);
-            Map<String, Object> map = mapper.QueryEmp(1);
-            System.out.println(map);
+            QueryEmpDTO dto=new QueryEmpDTO();
+            dto.setId(1);
+            List<Emp> emps = mapper.QueryEmp(dto);
+            System.out.println(emps);
         }
     }
 
@@ -58,27 +51,29 @@ public class MybatisTest {
     public void test02(){
         try (SqlSession session = sqlSessionFactory.openSession()) {
             EmpMapper mapper = session.getMapper(EmpMapper.class);
-            Emp emp = mapper.QueryEmp2(3);
-            System.out.println(emp);
+            List<Emp> emps = mapper.QueryEmp2("%徐%");
+            System.out.println(emps);
         }
     }
-
+//循环逐条插入  412ms
+//使用ExecutorType.BATCH进行批量查询  348ms
+//mysql的批量SQL插入  283ms
     @Test
     public void test03(){
+        List<Emp> list=new ArrayList<>();
+        for(int i=0;i<1000;i++){
+            list.add(new Emp(null,"测试"+i, LocalDate.now(),2));
+        }
+        long begin = System.currentTimeMillis();
+        //try (SqlSession session = sqlSessionFactory.openSession(ExecutorType.BATCH)) {
         try (SqlSession session = sqlSessionFactory.openSession()) {
             EmpMapper mapper = session.getMapper(EmpMapper.class);
-            Emp emp = mapper.QueryEmp3(1);
-            System.out.println(emp);
+                //System.out.println(mapper.insert(emp));
+                System.out.println(mapper.insertBatch(list));
+            session.commit();
         }
+        long end=System.currentTimeMillis();
+        System.out.println(end-begin+"ms");
     }
 
-    @Test
-    public void test04(){
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            DeptMapper mapper = session.getMapper(DeptMapper.class);
-            Dept dept = mapper.SelectDeptAndEmps(1);
-            System.out.println(dept);
-            System.out.println(dept.getEmps());
-        }
-    }
 }

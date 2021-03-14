@@ -43,6 +43,5 @@
     <mappers>
 <!--        <mapper resource="EmpMapper.xml"/>-->
         <mapper class="cn.tulingxueyuan.mapper.EmpMapper"></mapper>
-        <mapper class="cn.tulingxueyuan.mapper.DeptMapper"></mapper>
     </mappers>
 </configuration>

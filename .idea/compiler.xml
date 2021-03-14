@@ -8,6 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="mybatis_resultmap" />
         <module name="mybatis_params_results" />
+        <module name="mybatis_cache" />
+        <module name="mybatis_dynaSql" />
       </profile>
     </annotationProcessing>
   </component>

@@ -7,7 +7,15 @@ public class Emp {
     private Integer id;
     private String username;
     private LocalDate createDate;
-    private Dept dept;
+    private Integer deptId;
+
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
+    }
 
     public Integer getId() {
         return id;
@@ -33,21 +41,13 @@ public class Emp {
         this.createDate = createDate;
     }
 
-    public Dept getDept() {
-        return dept;
-    }
-
-    public void setDept(Dept dept) {
-        this.dept = dept;
-    }
-
     @Override
     public String toString() {
         return "Emp{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", createDate=" + createDate +
-                ", dept=" + dept +
+                ", deptId=" + deptId +
                 '}';
     }
 }

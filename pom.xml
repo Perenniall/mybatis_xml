@@ -23,6 +23,8 @@
     <modules>
         <module>mybatis_params_results</module>
         <module>mybatis_resultmap</module>
+        <module>mybatis_dynaSql</module>
+        <module>mybatis_cache</module>
     </modules>
     <dependencies>
         <!--mybatis核心依赖-->

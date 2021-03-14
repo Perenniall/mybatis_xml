@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tulingxueyuan.mapper.DeptMapper">
+    <select id="SelectDept" resultType="cn.tulingxueyuan.pojo.Dept">
+    select * from dept where id=#{id}
+    </select>
+
+<!--嵌套结果(异步查询)：一对多 查询部门及所有员工-->
+    <resultMap id="SelectDeptAndEmpsMap" type="cn.tulingxueyuan.pojo.Dept">
+        <id column="d_id" property="id"></id>
+        <id column="dept_name" property="deptName"></id>
+        <collection property="emps" ofType="cn.tulingxueyuan.pojo.Emp" column="id" select="cn.tulingxueyuan.mapper.EmpMapper.SelectEmpByDeptId">
+        </collection>
+    </resultMap>
+    <select id="SelectDeptAndEmps" resultMap="SelectDeptAndEmpsMap">
+            select * from dept where id=#{id}
+    </select>
+</mapper>

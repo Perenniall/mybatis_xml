@@ -16,4 +16,42 @@
         emp t1 INNER JOIN dept t2 ON t1.`dept_id`=t2.`id`
         WHERE t1.id=#{id}
     </select>
+
+
+<!--嵌套结果  多对一-->
+    <resultMap id="QueryEmp_Map2" type="cn.tulingxueyuan.pojo.Emp">
+        <id column="e_id" property="id"></id>
+        <result column="username" property="username"></result>
+        <!--association来实现多对一中的一
+        property指定对象中的嵌套对象属性-->
+        <association property="dept">
+            <id column="d_id" property="id"></id>
+            <id column="dept_name" property="deptName"></id>
+        </association>
+    </resultMap>
+    <select id="QueryEmp2" resultMap="QueryEmp_Map2">
+        SELECT t1.`id` AS e_id,t1.`username`,t2.`id` AS d_id,t2.`dept_name` FROM
+        emp t1 INNER JOIN dept t2 ON t1.`dept_id`=t2.`id`
+        WHERE t1.id=#{id}
+    </select>
+
+
+    <!--嵌套查询(分步查询)  多对一-->
+    <resultMap id="QueryEmp_Map3" type="cn.tulingxueyuan.pojo.Emp">
+        <id column="e_id" property="id"></id>
+        <result column="username" property="username"></result>
+        <!--association来实现多对一中的一
+        property指定对象中的嵌套对象属性
+        column指定将哪个字段传到分步查询中
+        select指定分步查询的命名空间和id-->
+        <association property="dept" column="dept_id" select="cn.tulingxueyuan.mapper.DeptMapper.SelectDept">
+        </association>
+    </resultMap>
+    <select id="QueryEmp3" resultMap="QueryEmp_Map3">
+        select * from emp where id=#{id}
+    </select>
+<!--根据部门id查询所有员工-->
+    <select id="SelectEmpByDeptId" resultType="cn.tulingxueyuan.pojo.Emp">
+        select * from emp where id=#{id}
+    </select>
 </mapper>

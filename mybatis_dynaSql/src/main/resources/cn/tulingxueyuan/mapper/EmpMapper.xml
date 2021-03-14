@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tulingxueyuan.mapper.EmpMapper">
+<!--查询Emp 根据id,username,创建的时间和结束时间-->
+<!--使用动态Sql-->
+    <select id="QueryEmp" resultType="cn.tulingxueyuan.pojo.Emp">
+        <!--where 一般会加载动态条件中配合使用，会自动在所有条件的前面加上where关键字 还会去掉所有条件前面的and/or-->
+        <!--trim 功能比较灵活、广泛。可以用来实现<where>节点的功能-->
+        select * from emp where 1=1
+        <if test="id!=null and id!=''">
+            and id=#{id}
+        </if>
+        <if test="username!=null and username!=''">
+            and username=#{username}
+        </if>
+        <if test="beginDate!=null and beginDate!=''">
+            and create_date>=#{beginDate}
+        </if>
+        <if test="endDate!=null and endDate!=''">
+            and create_date&lt;=#{endDate}
+        </if>
+        <if test="deptId!=null and deptId!=''">
+            and dept_id=#{deptId}
+        </if>
+    </select>
+    <sql id="SelectEmp">
+        select ${columns} from emp
+    </sql>
+    <select id="QueryEmp2" resultType="cn.tulingxueyuan.pojo.Emp">
+        select * from emp where username like #{username}
+    </select>
+
+<!--循环逐条插入-->
+    <insert id="insert">
+        insert into emp (username,create_date,dept_id) values (#{username},#{createDate},#{deptId})
+    </insert>
+<!--循环逐条插入-->
+    <insert id="insertBatch">
+        insert into emp (username,create_date,dept_id) values
+        <foreach collection="emps" item="emp" separator=",">
+            (#{emp.username},#{emp.createDate},#{emp.deptId})
+        </foreach>
+    </insert>
+
+</mapper>
