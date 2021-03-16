@@ -25,6 +25,7 @@
         <module>mybatis_resultmap</module>
         <module>mybatis_dynaSql</module>
         <module>mybatis_cache</module>
+        <module>mybatis_pagehelper</module>
     </modules>
     <dependencies>
         <!--mybatis核心依赖-->

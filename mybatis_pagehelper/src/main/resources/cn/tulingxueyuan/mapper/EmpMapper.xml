@@ -3,6 +3,4 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.tulingxueyuan.mapper.EmpMapper">
-<!--    引用namespace所指定的mapper映射文件的缓存机制，执行增删改会清空指定namespace的缓存-->
-    <cache-ref namespace="cn.tulingxueyuan.mapper.DeptMapper"/>
 </mapper>

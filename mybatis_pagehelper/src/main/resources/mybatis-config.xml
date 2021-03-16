@@ -14,8 +14,6 @@
         <setting name="lazyLoadingEnabled" value="true"/>
         <!--设置对象的哪些方法会加载延迟查询-->
         <setting name="lazyLoadTriggerMethods" value=""/>
-        <!--开启二级缓存,默认为true-->
-        <setting name="cacheEnabled" value="true"/>
     </settings>
     <typeAliases>
         <!--根据包设置包里面所有的类的别名；会将类的名字作为别名（忽略大小写）-->
@@ -45,6 +43,5 @@
     <mappers>
 <!--        <mapper resource="EmpMapper.xml"/>-->
         <mapper class="cn.tulingxueyuan.mapper.EmpMapper"></mapper>
-        <mapper class="cn.tulingxueyuan.mapper.DeptMapper"></mapper>
     </mappers>
 </configuration>
