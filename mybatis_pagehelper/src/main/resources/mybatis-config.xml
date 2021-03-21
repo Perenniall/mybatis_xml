@@ -19,6 +19,9 @@
         <!--根据包设置包里面所有的类的别名；会将类的名字作为别名（忽略大小写）-->
         <package name="cn.tulingxueyuan.pojo.Emp"/>
     </typeAliases>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
     <!--environments可以多个环境
     default默认的数据库环境-->
     <environments default="development">
